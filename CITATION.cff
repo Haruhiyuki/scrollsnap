@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If ScrollSnap helps your research or agent pipeline, cite this software artifact."
+title: "scrollsnap-core: Traceable Reconstruction of Scroll Recordings for Model-Efficient GUI Agents"
+version: "0.1.0"
+date-released: "2026-05-07"
+authors:
+  - name: "ScrollSnap contributors"
+license: "Apache-2.0"
+abstract: "A model-oriented library for detecting scroll regions, reconstructing long-page coordinates, and extracting minimal visual evidence from scroll recordings."

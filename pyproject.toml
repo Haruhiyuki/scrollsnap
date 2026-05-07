@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scrollsnap-core"
+version = "0.1.0"
+description = "Model-oriented reconstruction of scroll recordings into traceable long images and tiles."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [
+  { name = "ScrollSnap contributors" },
+]
+keywords = [
+  "computer-use",
+  "gui-agents",
+  "scroll-recording",
+  "vision-token-reduction",
+  "video-analysis",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Image Processing",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+  "numpy",
+  "opencv-python",
+  "Pillow",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "build", "twine"]
+browser = ["playwright"]
+
+[project.scripts]
+scrollsnap = "scrollsnap.cli:main"
+scrollsnap-mcp = "scrollsnap.mcp_server:main"
+
+[project.urls]
+Documentation = "https://github.com/scrollsnap/scrollsnap-core#readme"
+Source = "https://github.com/scrollsnap/scrollsnap-core"
+Issues = "https://github.com/scrollsnap/scrollsnap-core/issues"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+markers = [
+  "browser: local Chromium-backed browser rendering scenarios",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

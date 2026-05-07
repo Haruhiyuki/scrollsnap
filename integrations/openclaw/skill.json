@@ -1,0 +1,23 @@
+{
+  "name": "scrollsnap",
+  "description": "Recover traceable long-page coordinates and minimal crops from scroll recordings.",
+  "entrypoints": {
+    "python_module": "scrollsnap.openclaw_adapter",
+    "cli_manifest": "PYTHONPATH=src python3 -m scrollsnap.cli openclaw-manifest"
+  },
+  "tools": [
+    {
+      "name": "analyze_scroll_recording",
+      "description": "Analyze a scroll recording and write trace.json."
+    },
+    {
+      "name": "query_scroll_crop",
+      "description": "Find source-frame crops covering a long-image bbox."
+    },
+    {
+      "name": "parse_scroll_region",
+      "description": "Extract minimal crops and pass them to a visual parser adapter."
+    }
+  ]
+}
+
