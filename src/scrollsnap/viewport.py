@@ -103,14 +103,14 @@ def _choose_left_edge(
     runs = [run for run in _runs_from_score(score, threshold) if run[1] <= core_left + 6]
     if not runs:
         return None
-    candidates = [(start + end - 1) // 2 for start, end, _ in runs]
-    enclosing = [candidate for candidate in candidates if candidate < core_center]
+    candidates = [((start + end - 1) // 2, peak) for start, end, peak in runs]
+    enclosing = [(candidate, peak) for candidate, peak in candidates if candidate < core_center]
     if not enclosing:
         return None
-    viable = [candidate for candidate in enclosing if _interval_has_motion(motion, candidate, core_left)]
+    viable = [(candidate, peak) for candidate, peak in enclosing if _interval_has_motion(motion, candidate, core_left)]
     if viable:
-        return int(min(viable))
-    return int(max(enclosing))
+        return int(max(viable, key=lambda item: (item[1], -abs(core_left - item[0])))[0])
+    return int(max(enclosing, key=lambda item: (item[1], -abs(core_left - item[0])))[0])
 
 
 def _choose_right_edge(
@@ -125,14 +125,14 @@ def _choose_right_edge(
     runs = [run for run in _runs_from_score(score, threshold) if run[0] >= core_right - 6]
     if not runs:
         return None
-    candidates = [(start + end - 1) // 2 for start, end, _ in runs]
-    enclosing = [candidate for candidate in candidates if candidate > core_center]
+    candidates = [((start + end - 1) // 2, peak) for start, end, peak in runs]
+    enclosing = [(candidate, peak) for candidate, peak in candidates if candidate > core_center]
     if not enclosing:
         return None
-    viable = [candidate for candidate in enclosing if _interval_has_motion(motion, core_right, candidate)]
+    viable = [(candidate, peak) for candidate, peak in enclosing if _interval_has_motion(motion, core_right, candidate)]
     if viable:
-        return int(max(viable))
-    return int(min(enclosing))
+        return int(max(viable, key=lambda item: (item[1], -abs(core_right - item[0])))[0])
+    return int(max(enclosing, key=lambda item: (item[1], -abs(core_right - item[0])))[0])
 
 
 def _motion_projection(energy: np.ndarray | None, start: int, end: int, axis: int) -> np.ndarray | None:

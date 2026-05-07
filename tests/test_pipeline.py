@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 
 import pytest
+from PIL import ImageFont
 
 from scrollsnap.analyzer import analyze_frames, write_analysis_outputs
 from scrollsnap.benchmark import benchmark_scenarios
@@ -75,6 +76,14 @@ def test_page_jump_splits_segments(tmp_path: Path) -> None:
 def test_stress_synthetic_scenarios(scenario: str, tmp_path: Path) -> None:
     evaluation, _ = _run_scenario(scenario, tmp_path)
     assert evaluation.passed, evaluation
+
+
+def test_repeated_viewport_is_stable_with_default_pil_font(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    import scrollsnap.synthetic as synthetic
+
+    monkeypatch.setattr(synthetic, "_font", lambda size=15: ImageFont.load_default())
+    evaluation, result = _run_scenario("repeated", tmp_path)
+    assert evaluation.passed, (evaluation, result.viewport_bbox)
 
 
 def test_benchmark_reports_throughput() -> None:
